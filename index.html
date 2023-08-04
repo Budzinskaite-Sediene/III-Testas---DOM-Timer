@@ -69,7 +69,7 @@
         <button id="startTimer" class="button1" onclick="startTime()">
           Start
         </button>
-        <button id="resetTimer" class="button2">Reset</button>
+        <button id="resetTimer" class="button2" onclick="reset()">Reset</button>
       </div>
       <div id="messageBox" class="message"></div>
     </div>
@@ -90,17 +90,26 @@
           let seconds = time - minutes * 60;
           document.querySelector(
             ".timer"
-          ).innerHTML = `${minutes} : ${seconds}`;
+          ).innerHTML = `${minutes} min : ${seconds} s`;
           if (time <= 0) {
             clearInterval(interval);
             time = 0;
-            document.querySelector(".timer").innerHTML = `Time is over`;
-            // document.getElementById - įdėti kažką
+            document.querySelector(".timer").innerHTML = `Time's up!`;
+            document.querySelector(
+              ".timer"
+            ).innerHTML = `Go to learn Java script!`;
             input.value = "";
             timeRemaining = false;
           }
           time--;
         }, 1000);
+      }
+
+      function reset() {
+        clearInterval(interval);
+        document.querySelector(".timer").innerHTML = "";
+        input.value = "";
+        timeRemaining = false;
       }
     </script>
   </body>
