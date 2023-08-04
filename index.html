@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    input {
+      border: 1px solid blue;
+      border-radius: 30px;
+      height: 30px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .block {
+      max-width: 100%;
+      width: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-left: 30px;
+    }
+
+    .timer {
+      font-size: 20px;
+      margin: 20px;
+    }
+
+    .button1 {
+      background-color: blue;
+      color: white;
+      border: none;
+      height: 30px;
+      width: 80px;
+      border-radius: 30px;
+    }
+
+    .button2 {
+      background-color: yellow;
+      color: blue;
+      border: none;
+      height: 30px;
+      width: 80px;
+      border-radius: 30px;
+    }
+  </style>
+  <body>
+    <div class="block">
+      <h1>Enter time</h1>
+      <input type="text" id="minutes" />
+      <div id="displayTimer" class="timer">test</div>
+      <div class="buttons">
+        <button id="startTimer" class="button1">Start</button>
+        <button id="resetTimer" class="button2">Reset</button>
+      </div>
+    </div>
+  </body>
+</html>
