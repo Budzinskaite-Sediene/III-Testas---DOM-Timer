@@ -24,7 +24,7 @@
 
     .block {
       max-width: 100%;
-      width: 150px;
+      width: 250px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -65,16 +65,9 @@
       color: yellow;
       box-shadow: 0 0 5px 0;
     }
-
-    .message {
-      display: none;
-      padding: 10px;
-      border: 2px solid red;
-      background-color: white;
-      font-weight: bold;
-    }
   </style>
   <body>
+    <audio id="terribleSound" src="audio.mp3"></audio>
     <div class="block">
       <h1>Enter time</h1>
       <input type="text" id="time" />
@@ -83,15 +76,16 @@
         <button id="startTimer" class="button1" onclick="startTime()">
           Start
         </button>
-        <button id="resetTimer" class="button2" onclick="reset()">Reset</button>
+        <button id="resetTimer" class="button2" onclick="resetTime()">
+          Reset
+        </button>
       </div>
-      <div id="messageBox" class="message"></div>
     </div>
 
     <script>
-      let countdown;
       let timeRemaining = false;
       let time = 0;
+      let startButton = document.querySelector(".button1");
       const input = document.getElementById("time");
       function startTime() {
         if (!input.checkValidity()) {
@@ -99,6 +93,7 @@
         }
         if (!timeRemaining) time = input.value * 60;
         timeRemaining = true;
+        startButton.disabled = true;
         interval = setInterval(() => {
           let minutes = Math.floor(time / 60);
           let seconds = time - minutes * 60;
@@ -107,11 +102,12 @@
           ).innerHTML = `${minutes} min : ${seconds} s`;
           if (time <= 0) {
             clearInterval(interval);
-            time = 0;
-            document.querySelector(".timer").innerHTML = `Time's up!`;
             document.querySelector(
               ".timer"
-            ).innerHTML = `Go to learn Java script!`;
+            ).innerHTML = `Time's up! Go to learn Java script!`;
+            document.querySelector(".timer").style.backgroundColor = "red";
+            document.querySelector(".timer").style.color = "white";
+            document.querySelector("terribleSound").play();
             input.value = "";
             timeRemaining = false;
           }
@@ -119,11 +115,12 @@
         }, 1000);
       }
 
-      function reset() {
+      function resetTime() {
         clearInterval(interval);
         document.querySelector(".timer").innerHTML = "";
         input.value = "";
         timeRemaining = false;
+        startButton.disabled = false;
       }
     </script>
   </body>
