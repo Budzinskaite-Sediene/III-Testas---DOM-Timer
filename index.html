@@ -10,6 +10,7 @@
       border: 1px solid blue;
       border-radius: 30px;
       height: 30px;
+      text-align: center;
     }
     .buttons {
       display: flex;
@@ -62,10 +63,10 @@
   <body>
     <div class="block">
       <h1>Enter time</h1>
-      <input type="text" id="minutes" />
-      <div id="displayTimer" class="timer">test</div>
+      <input type="text" id="time" />
+      <div id="displayTimer" class="timer"></div>
       <div class="buttons">
-        <button id="startTimer" class="button1" onclick="startTime(event)">
+        <button id="startTimer" class="button1" onclick="startTime()">
           Start
         </button>
         <button id="resetTimer" class="button2">Reset</button>
@@ -75,34 +76,31 @@
 
     <script>
       let countdown;
-      let timeRemaining;
-      function startTime(e) {
-        const input = document.getElementById("minutes");
-        const timeMinutes = parseInt(input.value, 10);
-        if (isNaN(timeMinutes) || timeMinutes <= 0) {
-          showMessage("Please enter a valid time in minutes.");
-          return;
+      let timeRemaining = false;
+      let time = 0;
+      const input = document.getElementById("time");
+      function startTime() {
+        if (!input.checkValidity()) {
+          alert("Please enter a valid number");
         }
-        timeRemaining = timeMinutes * 60;
-        displayTime();
-        countdown = setInterval(updateTime, 1000);
-      }
-
-      function updateTime() {
-        timeRemaining--;
-        if (timeRemaining < 0) {
-          clearInterval(countdown);
-          showTimeExpired();
-        } else {
-          displayTime();
-        }
-      }
-
-      function displayTime() {
-        const displayTimer = document.getElementById("#displayTimer");
-        const minutes = Math.floor(timeRemaining / 60);
-        const seconds = timeRemaining % 60;
-        displayTimer.textContent =
+        if (!timeRemaining) time = input.value * 60;
+        timeRemaining = true;
+        interval = setInterval(() => {
+          let minutes = Math.floor(time / 60);
+          let seconds = time - minutes * 60;
+          document.querySelector(
+            ".timer"
+          ).innerHTML = `${minutes} : ${seconds}`;
+          if (time <= 0) {
+            clearInterval(interval);
+            time = 0;
+            document.querySelector(".timer").innerHTML = `Time is over`;
+            // document.getElementById - įdėti kažką
+            input.value = "";
+            timeRemaining = false;
+          }
+          time--;
+        }, 1000);
       }
     </script>
   </body>
