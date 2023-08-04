@@ -6,6 +6,11 @@
     <title>Document</title>
   </head>
   <style>
+    body {
+      margin: 0 auto;
+      background-color: beige;
+    }
+
     input {
       border: 1px solid blue;
       border-radius: 30px;
@@ -13,7 +18,7 @@
       text-align: center;
     }
     input:hover {
-      background-color: bisque;
+      background-color: beige;
     }
     .buttons {
       display: flex;
@@ -66,26 +71,48 @@
       box-shadow: 0 0 5px 0;
     }
 
+    h1,
     h2 {
       text-align: center;
     }
+
+    .container {
+      background-color: azure;
+      max-width: 45%;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    span {
+      width: 240px;
+      border-bottom: 1px solid blue;
+      margin-bottom: 30px;
+    }
   </style>
   <body>
-    <audio id="terribleSound" src="audio.mp3"></audio>
-    <div class="block">
-      <h1>Enter time</h1>
-      <input type="text" id="timeInput" />
-      <h2 id="displayTimer" class="timer"></h2>
-      <div class="buttons">
-        <button id="startTimer" class="button1" onclick="startTime()">
-          Start
-        </button>
-        <button id="resetTimer" class="button2" onclick="resetTime()">
-          Reset
-        </button>
+    <div class="container">
+      <audio id="terribleSound" src="audio.mp3"></audio>
+      <div class="block">
+        <h2 class="">Welcome to a mysteriuos time world!</h2>
+        <span></span>
+
+        <input type="text" id="timeInput" placeholder="Enter time here" />
+        <h2 id="displayTimer" class="timer"></h2>
+        <div class="buttons">
+          <button id="startTimer" class="button1" onclick="startTime()">
+            Start
+          </button>
+          <button id="resetTimer" class="button2" onclick="resetTime()">
+            Reset
+          </button>
+        </div>
       </div>
     </div>
-
     <script>
       let interval;
       let timeRemaining = false;
@@ -93,33 +120,38 @@
       let startButton = document.querySelector(".button1");
       const input = document.getElementById("timeInput");
       function startTime() {
-        startButton.disabled = true;
-        if (input === "" || isNaN(input)) {
-          document.querySelector(".timer").innerHTML =
-            "Please enter a valid number";
+        // startButton.disabled = true;
+        if (!input.checkValidity()) {
+          document.querySelector(".timer").innerHTML = "";
         } else {
-          if (!timeRemaining) time = input.value * 60;
-          timeRemaining = true;
-          interval = setInterval(() => {
-            let minutes = Math.floor(time / 60);
-            let seconds = time - minutes * 60;
-            document.querySelector(
-              ".timer"
-            ).innerHTML = `${minutes} min : ${seconds} s`;
-            if (time <= 0) {
-              startButton.disabled = false;
-              clearInterval(interval);
+          const inputMinutes = parseFloat(input.value);
+          if (inputMinutes <= 0 || isNaN(inputMinutes)) {
+            document.querySelector(".timer").innerHTML =
+              "Please enter a valid number";
+          } else {
+            if (!timeRemaining) time = input.value * 60;
+            timeRemaining = true;
+            interval = setInterval(() => {
+              let minutes = Math.floor(time / 60);
+              let seconds = time - minutes * 60;
               document.querySelector(
                 ".timer"
-              ).innerHTML = `Time's up! Let's learn some Java script!`;
-              document.querySelector(".timer").style.backgroundColor = "red";
-              document.querySelector(".timer").style.color = "white";
-              document.querySelector("#terribleSound").play();
-              input.value = "";
-              timeRemaining = false;
-            }
-            time--;
-          }, 1000);
+              ).innerHTML = `${minutes} min : ${seconds} s`;
+              if (time <= 0) {
+                startButton.disabled = false;
+                clearInterval(interval);
+                document.querySelector(
+                  ".timer"
+                ).innerHTML = `Time's up! Let's learn some Java script!`;
+                document.querySelector(".timer").style.backgroundColor = "red";
+                document.querySelector(".timer").style.color = "white";
+                document.querySelector("#terribleSound").play();
+                input.value = "";
+                timeRemaining = false;
+              }
+              time--;
+            }, 1000);
+          }
         }
       }
       function resetTime() {
