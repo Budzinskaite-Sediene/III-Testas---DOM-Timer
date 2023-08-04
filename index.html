@@ -72,6 +72,7 @@
       </div>
       <div id="messageBox" class="message"></div>
     </div>
+
     <script>
       let countdown;
       let timeRemaining;
@@ -83,7 +84,25 @@
           return;
         }
         timeRemaining = timeMinutes * 60;
+        displayTime();
         countdown = setInterval(updateTime, 1000);
+      }
+
+      function updateTime() {
+        timeRemaining--;
+        if (timeRemaining < 0) {
+          clearInterval(countdown);
+          showTimeExpired();
+        } else {
+          displayTime();
+        }
+      }
+
+      function displayTime() {
+        const displayTimer = document.getElementById("#displayTimer");
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        displayTimer.textContent =
       }
     </script>
   </body>
