@@ -50,6 +50,14 @@
       width: 80px;
       border-radius: 30px;
     }
+
+    .message {
+      display: none;
+      padding: 10px;
+      border: 2px solid red;
+      background-color: white;
+      font-weight: bold;
+    }
   </style>
   <body>
     <div class="block">
@@ -57,9 +65,26 @@
       <input type="text" id="minutes" />
       <div id="displayTimer" class="timer">test</div>
       <div class="buttons">
-        <button id="startTimer" class="button1">Start</button>
+        <button id="startTimer" class="button1" onclick="startTime(event)">
+          Start
+        </button>
         <button id="resetTimer" class="button2">Reset</button>
       </div>
+      <div id="messageBox" class="message"></div>
     </div>
+    <script>
+      let countdown;
+      let timeRemaining;
+      function startTime(e) {
+        const input = document.getElementById("minutes");
+        const timeMinutes = parseInt(input.value, 10);
+        if (isNaN(timeMinutes) || timeMinutes <= 0) {
+          showMessage("Please enter a valid time in minutes.");
+          return;
+        }
+        timeRemaining = timeMinutes * 60;
+        countdown = setInterval(updateTime, 1000);
+      }
+    </script>
   </body>
 </html>
